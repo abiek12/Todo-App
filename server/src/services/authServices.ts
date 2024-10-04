@@ -1,6 +1,6 @@
 import { IUser } from "../models/interfaces/IUser";
 import { UserRepository } from "../models/repositories/userRepository";
-import { comparePassword, hashPassword } from "../utils/passwordUtils";
+import { comparePassword, hashPassword } from "../utils/common";
 
 export class AuthServices {
     private userRepo = new UserRepository();
