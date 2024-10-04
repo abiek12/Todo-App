@@ -7,10 +7,9 @@ const TodoSchema : Schema = new Schema({
         required: true
     },
     status: {
-        type: String,
+        type: Boolean,
         required: true,
-        enum: ['pending', 'completed'],
-        default: 'pending'
+        default: false
     },
     createdAt: {
         type: Date,
