@@ -47,6 +47,7 @@ export class ProjectServices {
     deleteProject = async (_id: string): Promise<void> => {
         try {
             const project = await this.projectRepo.deleteProject(_id);
+            return project;
         } catch (error) {
             console.error(error);
             throw error;

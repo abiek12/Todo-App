@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { ProjectRepository } from "../models/repositories/projectRepository";
 import { commonMessages, httpStatus } from "../utils/common";
 import { todoRepository } from "../models/repositories/todoRepository";
 import { ProjectServices } from "../services/projectServices";
@@ -50,4 +49,45 @@ export class ProjectControllers {
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
+
+    updateProject = async (req: Request, res: Response) => {
+        try {
+           const {_id, title} = req.body;
+           if(!_id || !title) {
+               console.error("Mandatatory fields are missing!")
+               return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
+           } 
+
+           const projectToUpdate = await this.projectService.updateProject(_id, title);
+           if(!projectToUpdate) {
+               console.error("Project doesn't exist!");
+               return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
+           }
+
+           console.info("Project Updated Successfully!");
+           return res.status(this.statusCode.SUCCESS).send(projectToUpdate);
+
+        } catch (error) {
+            console.error("Error Registering User");
+            return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
+        }
+    }
+
+    deleteProject = async (req: Request, res: Response) => {
+        try {
+            const {_id} = req.params;
+            if(!_id) {
+                console.error("Mandatatory fields are missing!")
+                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
+            }
+
+            const project = await this.projectService.deleteProject(_id);
+            console.info("Project Deleted Successfully!");
+            return res.status(this.statusCode.SUCCESS).send("Project Deleted Successfully!");
+        } catch (error) {
+            console.error("Error Registering User");
+            return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
+        }
+    }
+
 }
