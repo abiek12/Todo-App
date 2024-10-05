@@ -1,7 +1,7 @@
 export interface ITodo {
     _id: string;
     description: string;
-    status: 'pending' | 'completed';
+    status: boolean;
     createdAt: Date;
     updatedAt: Date;
   }

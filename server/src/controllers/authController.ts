@@ -14,13 +14,13 @@ export class authControllers {
         try {
             if(!email || !password) {
                 console.error("Mandatatory fields are missing!")
-                res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
+                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
             const exisitingUser = await this.userRepo.findUserByEmail(email);
             if(exisitingUser) {
                 console.error("User Already Exist!");
-                res.status(this.statusCode.BAD_REQUEST).send("User Already Exist!");
+                return res.status(this.statusCode.BAD_REQUEST).send("User Already Exist!");
             }
 
             const newUser = await this.authServices.userRegistration(email, password);
@@ -29,11 +29,11 @@ export class authControllers {
                 newUser
             }
             console.log("User Registered Successfully.");
-            res.status(this.statusCode.SUCCESS).send(msg)
+            return res.status(this.statusCode.SUCCESS).send(msg)
 
         } catch (error) {
             console.error("Error Registering User");
-            res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
+            return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
 
@@ -42,20 +42,20 @@ export class authControllers {
         try {
             if(!email || !password) {
                 console.error("Mandatatory fields are missing!")
-                res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
+                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
             const user = await this.authServices.userLogin(email, password);
             if(!user) {
                 console.error("User doesn't exist!")
-                res.status(this.statusCode.NOT_FOUND).send("User doesn't exist!");
+                return res.status(this.statusCode.NOT_FOUND).send("User doesn't exist!");
             }
 
             console.log("User Login Successfully");
-            res.status(this.statusCode.SUCCESS).json({message:'Login Successful', user});
+            return res.status(this.statusCode.SUCCESS).json({message:'Login Successful', user});
         } catch (error) {
             console.error("Error Registering User");
-            res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
+            return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
 }
