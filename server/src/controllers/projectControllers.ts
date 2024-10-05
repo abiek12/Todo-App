@@ -31,19 +31,34 @@ export class ProjectControllers {
         }
     }
 
-    getProjects = async (req: Request, res: Response) => {
+    getAllProjects = async (req: Request, res: Response) => {
         try {
-            const {_id} = req.query;
-
-            if(_id) {
-                const project = await this.projectService.getSpecificProject(_id as string);
-                console.info("Project Fetched Successfully!");
-                return res.status(this.statusCode.SUCCESS).send(project);
-            }
             const allProjects = await this.projectService.getAllProject();
 
             console.info("Project Fetched Successfully!");
             return res.status(this.statusCode.SUCCESS).send(allProjects);
+        } catch (error) {
+            console.error("Error Registering User");
+            return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
+        }
+    }
+
+    getSpecificProject = async (req: Request, res: Response) => {
+        try {
+            const {_id} = req.params;
+            if(!_id) {
+                console.error("Mandatatory fields are missing!")
+                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
+            }
+
+            const projectById = await this.projectService.getSpecificProject(_id);
+            if(!projectById) {
+                console.error("Project doesn't exist!");
+                return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
+            }
+
+            console.info("Project Fetched Successfully!");
+            return res.status(this.statusCode.SUCCESS).send(projectById);
         } catch (error) {
             console.error("Error Registering User");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
