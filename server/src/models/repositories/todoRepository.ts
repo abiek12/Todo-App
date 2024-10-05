@@ -6,6 +6,10 @@ export class todoRepository {
         return await new Todo(todo).save();
     }
 
+    getTodoById =  async (_id: string): Promise<ITodo | null> => {
+        return await Todo.findById(_id);
+    }
+
     editTodo = async (_id: string, update: Partial<ITodo>): Promise<ITodo | null> => {
         return await Todo.findByIdAndUpdate(_id, update);
     }
