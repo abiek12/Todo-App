@@ -67,7 +67,8 @@ export class ProjectControllers {
 
     updateProject = async (req: Request, res: Response) => {
         try {
-           const {_id, title} = req.body;
+           const {title} = req.body;
+           const {_id} =  req.params;
            if(!_id || !title) {
                console.error("Mandatatory fields are missing!")
                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");

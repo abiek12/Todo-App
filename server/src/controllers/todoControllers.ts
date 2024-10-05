@@ -12,7 +12,7 @@ export class TodoControllers {
     // Add todo to project
     addTodo = async (req: Request, res: Response) => {
         try {
-            const {_id} = req.query;
+            const {_id} = req.params;
             const {description} = req.body;
             if(!_id) {
                 console.error("Mandatatory fields are missing!");
@@ -41,7 +41,8 @@ export class TodoControllers {
     updateTodo = async (req: Request, res: Response) => {
         try {
             const {status} = req.body;
-            const {_id, todoId} = req.query;
+            const {_id} = req.params;
+            const {todoId} = req.query;
 
             if(!_id || !todoId) {
                 console.error("Mandatatory fields are missing!");
@@ -74,7 +75,8 @@ export class TodoControllers {
 
     removeTodo = async (req: Request, res: Response) => {
         try {
-            const {_id, todoId} = req.query;
+            const {_id} =  req.params;
+            const {todoId} = req.query;
             if(!_id || !todoId) {
                 console.error("Mandatatory fields are missing!");
                 return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
