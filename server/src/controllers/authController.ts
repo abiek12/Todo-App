@@ -54,7 +54,7 @@ export class authControllers {
             console.log("User Login Successfully");
             return res.status(this.statusCode.SUCCESS).json({message:'Login Successful', user});
         } catch (error) {
-            console.error("Error Registering User");
+            console.error("Error Logging In User");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }

@@ -26,7 +26,7 @@ export class ProjectControllers {
                 return res.status(this.statusCode.SUCCESS).send(newProject);
             }
         } catch (error) {
-            console.error("Error Registering User");
+            console.error("Error Creating Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -38,7 +38,7 @@ export class ProjectControllers {
             console.info("Project Fetched Successfully!");
             return res.status(this.statusCode.SUCCESS).send(allProjects);
         } catch (error) {
-            console.error("Error Registering User");
+            console.error("Error Fetching All Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -60,7 +60,7 @@ export class ProjectControllers {
             console.info("Project Fetched Successfully!");
             return res.status(this.statusCode.SUCCESS).send(projectById);
         } catch (error) {
-            console.error("Error Registering User");
+            console.error("Error Fetching Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -83,7 +83,7 @@ export class ProjectControllers {
            return res.status(this.statusCode.SUCCESS).send(projectToUpdate);
 
         } catch (error) {
-            console.error("Error Registering User");
+            console.error("Error Updating Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -100,7 +100,7 @@ export class ProjectControllers {
             console.info("Project Deleted Successfully!");
             return res.status(this.statusCode.SUCCESS).send("Project Deleted Successfully!");
         } catch (error) {
-            console.error("Error Registering User");
+            console.error("Error Deleting Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
