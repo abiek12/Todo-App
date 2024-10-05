@@ -4,8 +4,8 @@ import { UserRepository } from "../models/repositories/userRepository";
 import { AuthServices } from "../services/authServices";
 
 export class authControllers {
-    private statusCode = new httpStatus
-    private messages = new commonMessages
+    private statusCode = new httpStatus;
+    private messages = new commonMessages;
     private userRepo = new UserRepository();
     private authServices = new AuthServices();
 
