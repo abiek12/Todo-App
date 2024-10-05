@@ -6,22 +6,32 @@ export class AuthServices {
     private userRepo = new UserRepository();
 
     userRegistration = async (email: string, password: string): Promise<IUser> => {
-        const hashedPassword = await hashPassword(password);
-        const user = {
-            email,
-            password: hashedPassword
+        try {
+            const hashedPassword = await hashPassword(password);
+            const user = {
+                email,
+                password: hashedPassword
+            }
+            const newUser = await this.userRepo.createUser(user);
+            return newUser;
+        } catch (error) {
+            console.error(error);
+            throw error;
         }
-        const newUser = await this.userRepo.createUser(user);
-        return newUser;
     }
 
     userLogin = async (email: string, password: string): Promise<IUser | null> => {
-        const user = await this.userRepo.findUserByEmail(email);
-        if(!user) return null;
+        try {
+            const user = await this.userRepo.findUserByEmail(email);
+            if(!user) return null;
 
-        const isPasswordValid = await comparePassword(password, user.password);
-        if(!isPasswordValid) return null;
+            const isPasswordValid = await comparePassword(password, user.password);
+            if(!isPasswordValid) return null;
 
-        return user;
+            return user;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
 }
