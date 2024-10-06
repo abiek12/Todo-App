@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { commonMessages, generateAccessToken, generateRefreshToken, httpStatus } from "../utils/common";
 import { UserRepository } from "../models/repositories/userRepository";
 import { AuthServices } from "../services/authServices";
+import jwt from 'jsonwebtoken';
 
 export class authControllers {
     private statusCode = new httpStatus;
@@ -58,6 +59,32 @@ export class authControllers {
             return res.status(this.statusCode.SUCCESS).json({message:'Login Successful', accesstoken, refreshToken});
         } catch (error) {
             console.error("Error Logging In User");
+            return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
+        }
+    }
+
+    loginWithRefreshToken = async (req: Request, res: Response) => {
+        try {
+            const {token} = req.body;
+            if(!token) {
+                console.error("Token not found!");
+                return res.status(this.statusCode.UNAUTHORIZED).send(this.messages.UNAUTHORIZED);
+            }
+
+            jwt.verify(token, process.env.JWT_SECRET || 'secret', async (err: any, user: any) => {
+                if(err) {
+                    console.error(err);
+                    return res.status(this.statusCode.UNAUTHORIZED).send(this.messages.UNAUTHORIZED);
+                }
+
+                const accesstoken: string = await generateAccessToken(user._id);
+                const refreshToken: string = await generateRefreshToken(user._id);
+
+                console.info("User Login with Refresh Token Successfully");
+                return res.status(this.statusCode.SUCCESS).json({message:'Login Successful', accesstoken, refreshToken});
+            })
+        } catch (error) {
+            console.error("Error Logging In User with Refresh Token");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
