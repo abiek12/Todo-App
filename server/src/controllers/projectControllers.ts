@@ -69,7 +69,7 @@ export class ProjectControllers {
                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
            } 
 
-           const projectToUpdate = await this.projectService.updateProject(_id, title);
+           const projectToUpdate = await this.projectService.updateProject(_id, req.body);
            if(!projectToUpdate) {
                console.error("ERROR::Project doesn't exist!");
                return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");

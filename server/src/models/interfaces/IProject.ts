@@ -1,9 +1,9 @@
 import { ITodo } from './ITodo';
 
 export interface IProject {
-  _id: string;
+  _id?: string;
   title: string;
   todos: ITodo[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
