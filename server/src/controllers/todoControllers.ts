@@ -84,7 +84,7 @@ export class TodoControllers {
             }
 
             const project = await this.projectService.getSpecificProject(_id as string);
-            if(!project) {
+            if(!project || !project._id) {
                 console.error("ERROR::Project doesn't exist!");
                 return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
             }
@@ -95,7 +95,8 @@ export class TodoControllers {
                 return res.status(this.statusCode.NOT_FOUND).send("Todo doesn't exist!");
             }
 
-            const deletedTodo = await this.todoRepo.deleteTodo(todoId as string);
+            await this.todoRepo.deleteTodo(todoId as string);
+            await this.projectRepo.deleteTodoFromProject(project._id, todo);
 
             console.info("INFO::Todo Deleted Successfully!");
             return res.status(this.statusCode.SUCCESS).send("Todo Deleted Successfully!");

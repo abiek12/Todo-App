@@ -23,6 +23,10 @@ export class ProjectRepository {
         return await Project.findByIdAndUpdate(_id,{ $push: { todos: newTodo._id } },{ new: true })
     }
 
+    deleteTodoFromProject = async (_id: string, todo: ITodo): Promise<IProject | null> => {
+        return await Project.findByIdAndUpdate(_id,{ $pull: { todos: todo._id } },{ new: true })
+    }
+
     deleteProject = async (_id: string): Promise<void> => {
         await Project.findByIdAndDelete(_id);        
     }
