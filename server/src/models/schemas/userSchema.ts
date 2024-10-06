@@ -11,6 +11,7 @@ const UserSchema: Schema =  new Schema ({
         type: String,
         required: true
     },
+    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
     createdAt: {
         type: Date,
         default: Date.now
