@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
-const saltRound = process.env.SALT_ROUND || 10;
+import jwt from 'jsonwebtoken';
+const SALT_ROUND = process.env.SALT_ROUND || 10;
 
 export class httpStatus {
     INTERNAL_ERROR = 500;
@@ -19,9 +20,17 @@ export class commonMessages {
 }
 
 export const hashPassword = async (password: string): Promise<string> => {
-    return bcrypt.hash(password, saltRound);
+    return bcrypt.hash(password, SALT_ROUND);
 }
 
 export const comparePassword = async (plainPassword: string, hashedPassword: string): Promise<boolean> => {
     return bcrypt.compare(plainPassword, hashedPassword);    
+}
+
+export const generateAccessToken = async (userId: string): Promise<string> => {
+    return jwt.sign({ userId }, process.env.JWT_SECRET || 'secret', { expiresIn: '1d' });
+}
+
+export const generateRefreshToken = async (userId: string): Promise<string> => {
+    return jwt.sign({ userId }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
 }
