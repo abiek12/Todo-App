@@ -6,5 +6,6 @@ const authController = new authControllers();
 
 authRouter.post("/register", authController.registration);
 authRouter.post("/login", authController.login);
+authRouter.post("/loginWithRefreshToken", authController.loginWithRefreshToken);
 
 export default authRouter;
