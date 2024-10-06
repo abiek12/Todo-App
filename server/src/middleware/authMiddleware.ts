@@ -7,7 +7,7 @@ export const basicAuth = async (req: Request, res: Response, next: NextFunction)
     try {
         const authHeader = req.headers.authorization;
 
-        if (!authHeader || !authHeader.startsWith('Basic ')) {
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(statusCode.UNAUTHORIZED).json({ message: 'Missing or invalid authorization header' });
         }
 

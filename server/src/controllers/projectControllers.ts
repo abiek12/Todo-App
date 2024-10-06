@@ -13,7 +13,7 @@ export class ProjectControllers {
         try {
             const {title, todos} = req.body;
             if(!title) {
-                console.error("Mandatatory fields are missing!")
+                console.error("ERROR::Mandatatory fields are missing!")
                 return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
@@ -22,11 +22,11 @@ export class ProjectControllers {
                 const newTodo = await this.todoRepo.createTodo(todos);
                 newProject.todos.push(newTodo);
 
-                console.info("Project Created Successfully!");
+                console.info("INFO::Project Created Successfully!");
                 return res.status(this.statusCode.SUCCESS).send(newProject);
             }
         } catch (error) {
-            console.error("Error Creating Project");
+            console.error("ERROR::Error Creating Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -35,10 +35,10 @@ export class ProjectControllers {
         try {
             const allProjects = await this.projectService.getAllProject();
 
-            console.info("Project Fetched Successfully!");
+            console.info("INFO::Project Fetched Successfully!");
             return res.status(this.statusCode.SUCCESS).send(allProjects);
         } catch (error) {
-            console.error("Error Fetching All Project");
+            console.error("ERROR::Error Fetching All Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -47,20 +47,20 @@ export class ProjectControllers {
         try {
             const {_id} = req.params;
             if(!_id) {
-                console.error("Mandatatory fields are missing!")
+                console.error("ERROR::Mandatatory fields are missing!")
                 return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
             const projectById = await this.projectService.getSpecificProject(_id);
             if(!projectById) {
-                console.error("Project doesn't exist!");
+                console.error("ERROR::Project doesn't exist!");
                 return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
             }
 
-            console.info("Project Fetched Successfully!");
+            console.info("INFO::Project Fetched Successfully!");
             return res.status(this.statusCode.SUCCESS).send(projectById);
         } catch (error) {
-            console.error("Error Fetching Project");
+            console.error("ERROR::Error Fetching Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -70,21 +70,21 @@ export class ProjectControllers {
            const {title} = req.body;
            const {_id} =  req.params;
            if(!_id || !title) {
-               console.error("Mandatatory fields are missing!")
+               console.error("ERROR::Mandatatory fields are missing!")
                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
            } 
 
            const projectToUpdate = await this.projectService.updateProject(_id, title);
            if(!projectToUpdate) {
-               console.error("Project doesn't exist!");
+               console.error("ERROR::Project doesn't exist!");
                return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
            }
 
-           console.info("Project Updated Successfully!");
+           console.info("INFO::Project Updated Successfully!");
            return res.status(this.statusCode.SUCCESS).send(projectToUpdate);
 
         } catch (error) {
-            console.error("Error Updating Project");
+            console.error("ERROR::Error Updating Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -93,15 +93,15 @@ export class ProjectControllers {
         try {
             const {_id} = req.params;
             if(!_id) {
-                console.error("Mandatatory fields are missing!")
+                console.error("ERROR::Mandatatory fields are missing!")
                 return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
             const project = await this.projectService.deleteProject(_id);
-            console.info("Project Deleted Successfully!");
+            console.info("INFO::Project Deleted Successfully!");
             return res.status(this.statusCode.SUCCESS).send("Project Deleted Successfully!");
         } catch (error) {
-            console.error("Error Deleting Project");
+            console.error("ERROR::Error Deleting Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }

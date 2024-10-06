@@ -15,24 +15,24 @@ export class TodoControllers {
             const {_id} = req.params;
             const {description} = req.body;
             if(!_id) {
-                console.error("Mandatatory fields are missing!");
+                console.error("ERROR::Mandatatory fields are missing!");
                 return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
             const project = await this.projectService.getSpecificProject(_id as string);
             if(!project) {
-                console.error("Project doesn't exist!");
+                console.error("ERROR::Project doesn't exist!");
                 return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
             }
 
             const newTodo = await this.todoRepo.createTodo(description);
             project.todos.push(newTodo);
 
-            console.info("Todo Created Successfully!");
+            console.info("INFO::Todo Created Successfully!");
             return res.status(this.statusCode.SUCCESS).send(project);
 
         } catch (error) {
-            console.error("Error Creating Todo");
+            console.error("ERROR::Error Creating Todo");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -45,30 +45,30 @@ export class TodoControllers {
             const {todoId} = req.query;
 
             if(!_id || !todoId) {
-                console.error("Mandatatory fields are missing!");
+                console.error("ERROR::Mandatatory fields are missing!");
                 return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
             const project = await this.projectService.getSpecificProject(_id as string);
             if(!project) {
-                console.error("Project doesn't exist!");
+                console.error("ERROR::Project doesn't exist!");
                 return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
             }
 
             const todo = await this.todoRepo.getTodoById(todoId as string);
             if(!todo) {
-                console.error("Todo doesn't exist!");
+                console.error("ERROR::Todo doesn't exist!");
                 return res.status(this.statusCode.NOT_FOUND).send("Todo doesn't exist!");
             }
 
             const updatedTodo = await this.todoRepo.editTodo(todoId as string, {status});
             if(updatedTodo) {
-                console.info("Todo Status Updated Successfully!");
+                console.info("INFO::Todo Status Updated Successfully!");
                 return res.status(this.statusCode.SUCCESS).send(project);
             }
                         
         } catch (error) {
-            console.error("Error Updating Todo");
+            console.error("ERROR::Error Updating Todo");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
@@ -78,28 +78,28 @@ export class TodoControllers {
             const {_id} =  req.params;
             const {todoId} = req.query;
             if(!_id || !todoId) {
-                console.error("Mandatatory fields are missing!");
+                console.error("ERROR::Mandatatory fields are missing!");
                 return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
             const project = await this.projectService.getSpecificProject(_id as string);
             if(!project) {
-                console.error("Project doesn't exist!");
+                console.error("ERROR::Project doesn't exist!");
                 return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
             }
 
             const todo = await this.todoRepo.getTodoById(todoId as string);
             if(!todo) {
-                console.error("Todo doesn't exist!");
+                console.error("ERROR::Todo doesn't exist!");
                 return res.status(this.statusCode.NOT_FOUND).send("Todo doesn't exist!");
             }
 
             const deletedTodo = await this.todoRepo.deleteTodo(todoId as string);
 
-            console.info("Todo Deleted Successfully!");
+            console.info("INFO::Todo Deleted Successfully!");
             return res.status(this.statusCode.SUCCESS).send("Todo Deleted Successfully!");
         } catch (error) {
-            console.error("Error Deleting Todo");
+            console.error("ERROR::Error Deleting Todo");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
