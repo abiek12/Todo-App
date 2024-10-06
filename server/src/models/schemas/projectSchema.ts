@@ -6,7 +6,7 @@ const ProjectSchema : Schema = new Schema({
         type: String,
         required: true
     },
-    todo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Todo' }],
+    todos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Todo' }],
     createdAt: {
         type: Date,
         default: Date.now

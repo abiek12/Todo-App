@@ -1,4 +1,5 @@
 import { IProject } from "../interfaces/IProject";
+import { ITodo } from "../interfaces/ITodo";
 import { Project } from "../schemas/projectSchema";
 
 export class ProjectRepository {
@@ -16,6 +17,10 @@ export class ProjectRepository {
 
     updateProjectById = async (_id: string, update: Partial<IProject>): Promise<IProject | null> => {
         return await Project.findByIdAndUpdate(_id, update);
+    }
+
+    updateProjectByTodo = async (_id: string, newTodo: ITodo): Promise<IProject | null> => {
+        return await Project.findByIdAndUpdate(_id,{ $push: { todos: newTodo._id } },{ new: true })
     }
 
     deleteProject = async (_id: string): Promise<void> => {

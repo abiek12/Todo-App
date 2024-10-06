@@ -28,6 +28,6 @@ export const basicAuth = async (req: Request, res: Response, next: NextFunction)
 
     } catch (error) {
         console.error(error);
-        res.status(statusCode.INTERNAL_ERROR).send({ message: 'Error in auth' });
+        return res.status(statusCode.INTERNAL_ERROR).send({ message: 'Error in auth' });
     }
 }

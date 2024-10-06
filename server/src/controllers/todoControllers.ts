@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 import { commonMessages, httpStatus } from "../utils/common";
 import { ProjectServices } from "../services/projectServices";
 import { todoRepository } from "../models/repositories/todoRepository";
+import { ProjectRepository } from "../models/repositories/projectRepository";
 
 export class TodoControllers {
     private statusCode = new httpStatus;
     private messages = new commonMessages;
     private projectService = new ProjectServices();
     private todoRepo = new todoRepository();
+    private projectRepo = new ProjectRepository();
 
     // Add todo to project
     addTodo = async (req: Request, res: Response) => {
@@ -20,19 +22,19 @@ export class TodoControllers {
             }
 
             const project = await this.projectService.getSpecificProject(_id as string);
-            if(!project) {
+            if(!project || !project._id) {
                 console.error("ERROR::Project doesn't exist!");
                 return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
             }
 
-            const newTodo = await this.todoRepo.createTodo(description);
-            project.todos.push(newTodo);
-
-            console.info("INFO::Todo Created Successfully!");
-            return res.status(this.statusCode.SUCCESS).send(project);
-
+            const newTodo = await this.todoRepo.createTodo(req.body);
+            if(newTodo && newTodo._id) {                
+                const updatedProject = await this.projectRepo.updateProjectByTodo(project._id, newTodo)
+                console.info("INFO::Todo Created Successfully!");
+                return res.status(this.statusCode.SUCCESS).send(updatedProject);
+            }
         } catch (error) {
-            console.error("ERROR::Error Creating Todo");
+            console.error("ERROR::Error Creating Todo", error);
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
         }
     }
