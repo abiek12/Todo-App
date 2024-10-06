@@ -8,11 +8,11 @@ export class ProjectRepository {
     }
 
     findAllProject = async (): Promise<IProject[]> => {
-        return await Project.find();        
+        return await Project.find().populate("todos");        
     }
 
     findProjectById = async (_id: string): Promise<IProject | null> => {
-        return await Project.findById(_id);        
+        return await Project.findById(_id).populate("todos");        
     }
 
     updateProjectById = async (_id: string, update: Partial<IProject>): Promise<IProject | null> => {

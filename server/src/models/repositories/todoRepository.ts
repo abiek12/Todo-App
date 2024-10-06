@@ -11,7 +11,7 @@ export class todoRepository {
     }
 
     editTodo = async (_id: string, update: Partial<ITodo>): Promise<ITodo | null> => {
-        return await Todo.findByIdAndUpdate(_id, update);
+        return await Todo.findByIdAndUpdate(_id, {status: update.status, description: update.description});
     }
 
     deleteTodo = async (_id: string): Promise<void> => {
