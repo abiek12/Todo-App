@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const db_1 = __importDefault(require("./config/db"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const projectRoutes_1 = __importDefault(require("./routes/projectRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 5000;
@@ -14,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes_1.default);
-// app.use("/api/project", );
+app.use("/api/project", projectRoutes_1.default);
 app.get('/', (req, res) => {
     res.send("Welcome to Backend");
 });

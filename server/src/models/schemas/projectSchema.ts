@@ -1,13 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 import { IProject } from "../interfaces/IProject";
-import { Todo } from "./todoSchema";
 
 const ProjectSchema : Schema = new Schema({
     title: {
         type: String,
         required: true
     },
-    todo:[Todo],
+    todo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Todo' }],
     createdAt: {
         type: Date,
         default: Date.now
