@@ -1,11 +1,9 @@
 import { Request, Response } from "express";
 import { commonMessages, httpStatus } from "../utils/common";
-import { todoRepository } from "../models/repositories/todoRepository";
 import { ProjectServices } from "../services/projectServices";
 
 export class ProjectControllers {
     private projectService = new ProjectServices();
-    private todoRepo = new todoRepository();
     private statusCode = new httpStatus;
     private messages = new commonMessages;
 
@@ -17,11 +15,8 @@ export class ProjectControllers {
                 return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
             }
 
-            const newProject = await this.projectService.createProject(title);
-            if(newProject) {
-                const newTodo = await this.todoRepo.createTodo(todos);
-                newProject.todos.push(newTodo);
-
+            const newProject = await this.projectService.createProject(req.body);
+            if(newProject) {                
                 console.info("INFO::Project Created Successfully!");
                 return res.status(this.statusCode.SUCCESS).send(newProject);
             }
