@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken';
-import { UserRepository } from "../models/repositories/userRepository";
-import { comparePassword, httpStatus } from "../utils/common";
-const statusCode = new httpStatus
+import { httpStatus } from "../utils/common";
 
+const statusCode = new httpStatus
 export const basicAuth = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const authHeader = req.headers.authorization;
