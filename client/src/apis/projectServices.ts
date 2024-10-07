@@ -15,6 +15,14 @@ export const fetchAllProjects =  async () => {
     return await axios.get(`${API_URL}/api/project`, await authHeaders());
 }
 
+export const fetchProjectById = async (projectId: string) => {
+    return await axios.get(`${API_URL}/api/project/${projectId}`, await authHeaders());
+}
+
 export const createProject = async (projectData: any) => {
     return axios.post(`${API_URL}/api/project`, projectData, await authHeaders());
+}
+
+export const updateTodoStatus = async (projectId: string, todoId: string, status: boolean) => {
+    return axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, status}, await authHeaders());
 }

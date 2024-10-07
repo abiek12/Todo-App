@@ -22,7 +22,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .project-list {
     background: #f4f4f4;
     padding: 1.5rem 0;
