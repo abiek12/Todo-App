@@ -15,9 +15,9 @@ export default {
         projects: { type: Array, required: true },
     },
     methods: {
-        // viewProject(project) {
-        //     this.$emit('viewProject', project);
-        // },
+        viewProject(project) {
+            this.$emit('viewProject', project);
+        },
     },
 };
 </script>
@@ -25,9 +25,10 @@ export default {
 <style>
 .project-list {
     background: #f4f4f4;
+    padding: 1.5rem 0;
     border-radius: 1rem;
     width: 50%;
-    height: 32rem;
+    height: 30rem;
 }
 
 .project {

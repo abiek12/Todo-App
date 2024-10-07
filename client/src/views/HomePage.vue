@@ -1,18 +1,20 @@
 <template>
     <div class="home">
         <!-- <CreateProject @projectCreated="fetchProjects"/> -->
-        <ProjectList :projects="projects" @viewProject="viewProject"/>
-        <!-- <ProjectDetail v-if="selectedProject" :project="selectedProject" @close="selectedProject = null"/> -->
+        <ProjectList v-if="!selectedProject" :projects="projects" @viewProject="viewProject"/>
+        <ProjectDetail v-if="selectedProject" :project="selectedProject" @close="selectedProject = null"/>
     </div>
 </template>
 
 <script>
 import { ref, onMounted} from 'vue';
 import ProjectList from '../components/ProjectList.vue';
+// import CreateProject from '@/components/CreateProject.vue';
+import ProjectDetail from '@/components/ProjectDetail.vue';
 import { fetchAllProjects } from '@/apis/projectServices';
 
 export default { 
-    components: {ProjectList},
+    components: {ProjectList, ProjectDetail},
     setup() {
         const projects = ref([]);
         const selectedProject = ref(null);
