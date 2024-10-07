@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <h2>Register</h2>
+        <h2>Login</h2>
         <form @submit.prevent="login">
             <div>
                 <label for="email">Email:</label>
@@ -16,20 +16,34 @@
 </template>
 
 <script>
-import ref from 'vue';
+import {ref} from 'vue';
 import {loginUser} from '../apis/authServices.ts';
+import { useRouter } from 'vue-router';
 
 export default {
     setup() {
         const email = ref('');
         const password = ref('');
+        const successMessage = ref('');
+        const errorMessage = ref('');
+        const router = useRouter();
 
         const login = async () => {
             try {
                 const response = await loginUser({ email: email.value, password: password.value });
-                console.log('User registered successfully', response);
-                // Redirect to login or another page
+                if(response.status === 200) {
+                    successMessage.value = "User logged in successfully.";
+                    alert(response.data.message);
+                    // Redirect to login or another page
+                } else {
+                    successMessage.value = 'User registration failed. Please try again.'
+                    alert(response.data.message);
+                }
             } catch (error) {
+                errorMessage.value = error.response.data;
+                successMessage.value = '';
+                alert(errorMessage.value);
+
                 console.error('Error during registration', error);
             }
         };
