@@ -31,9 +31,7 @@ export default {
         const login = async () => {
             try {
                 const response = await loginUser({ email: email.value, password: password.value });
-                if(response.status === 200) {
-                    console.log(response.data);
-                    
+                if(response.status === 200) {                    
                     localStorage.setItem('accessToken', response.data.accessToken);
                     localStorage.setItem('refreshToken', response.data.refreshToken);
                     successMessage.value = "User logged in successfully.";
