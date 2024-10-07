@@ -11,8 +11,8 @@ const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-    origin: '*', // Allow all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods if needed
+    origin: 'http://localhost:8080',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Specify allowed methods if needed
     allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
 };
 

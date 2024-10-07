@@ -37,6 +37,9 @@ export default {
                     successMessage.value = "User logged in successfully.";
                     alert(response.data.message);
                     // Redirect to login or another page
+                    setTimeout(() => {
+                        router.push('/home');
+                    },1000)
                 } else {
                     successMessage.value = 'User registration failed. Please try again.'
                     alert(response.data.message);
