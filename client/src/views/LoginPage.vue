@@ -32,6 +32,10 @@ export default {
             try {
                 const response = await loginUser({ email: email.value, password: password.value });
                 if(response.status === 200) {
+                    console.log(response.data);
+                    
+                    localStorage.setItem('accessToken', response.data.accessToken);
+                    localStorage.setItem('refreshToken', response.data.refreshToken);
                     successMessage.value = "User logged in successfully.";
                     alert(response.data.message);
                     // Redirect to login or another page

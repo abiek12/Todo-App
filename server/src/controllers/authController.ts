@@ -52,11 +52,11 @@ export class authControllers {
                 return res.status(this.statusCode.NOT_FOUND).send("User doesn't exist!");
             }
 
-            const accesstoken: string = await generateAccessToken(user._id);
+            const accessToken: string = await generateAccessToken(user._id);
             const refreshToken: string = await generateRefreshToken(user._id); 
 
             console.log("INFO::User Login Successfully");
-            return res.status(this.statusCode.SUCCESS).json({message:'Login Successful', accesstoken, refreshToken});
+            return res.status(this.statusCode.SUCCESS).json({message:'Login Successful', accessToken, refreshToken});
         } catch (error) {
             console.error("ERROR::Error Logging In User");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
