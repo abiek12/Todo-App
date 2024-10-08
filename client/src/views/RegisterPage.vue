@@ -1,17 +1,20 @@
 <template>
     <div class="register-container">
-        <h2>Register</h2>
+        <h1>Register</h1>
         <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
-        <form @submit.prevent="register">
-            <div>
+        <form @submit.prevent="register" class="register-form">
+            <div class="email-container">
                 <label for="email">Email:</label>
-                <input type="text" v-model="email" required>
+                <br>
+                <input type="text" v-model="email" required placeholder="Enter your email">
             </div>
-            <div>
+            <div class="password-container">
                 <label for="password">Password:</label>
-                <input type="password" v-model="password" required>
+                <br>
+                <input type="password" v-model="password" required placeholder="Enter your password">
             </div>
-            <button type="submit">Register</button>
+            <router-link class="link" to="/login">Already have an account? Login here</router-link>
+            <button class="register-btn" type="submit">Register</button>
         </form>
     </div>
 </template>
@@ -55,14 +58,66 @@ export default {
         console.error('Error during registration', error);
       }
     }
+
+
     return { email, password, register };
   },
 };
 </script>
 
-<style>
-.success-message {
-  color: green;
-  margin-top: 10px;
+<style scoped>
+.register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+label {
+    float: left;
+    font-size: 0.85rem;
+}
+
+input {
+    padding: 0.5rem;
+    margin-right: 1rem;
+    width: 402px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.register-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    width: 10rem;
+    margin-top: 1rem;
+    border: 1px solid #000;
+}
+
+.register-btn:hover {
+    transition: 2ms ease-in-out;
+    color: blue;
+    border: 1px solid blue;
+}
+
+.link {
+  text-decoration: none;
+  font-size: 0.8rem;
+  color: #000;
+  margin-right: auto;
+}
+
+.link:hover {
+  color: blue;
 }
 </style>
