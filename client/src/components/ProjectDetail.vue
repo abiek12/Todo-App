@@ -108,6 +108,9 @@ export default {
 .todo-item {
     cursor: pointer;
     padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+    margin-bottom: 0.5rem;
 }
 
 .todo-item input {
