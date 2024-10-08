@@ -32,8 +32,9 @@ export const deleteProjectById = async (projectId: string) => {
 }
 
 export const updateProjectTitle = async (projectId: string, title: any) => {    
-    const resData = await axios.put(`${API_URL}/api/project/${projectId}`, {title}, await authHeaders());
-    console.log(resData);
-    
-    return resData
+     return await axios.put(`${API_URL}/api/project/${projectId}`, {title}, await authHeaders());    
+}
+
+export const deleteTodoItem = async (projectId: string, todoId: string) => {
+    return await axios.delete(`${API_URL}/api/project/${projectId}/todo?todoId=${todoId}`, await authHeaders());
 }

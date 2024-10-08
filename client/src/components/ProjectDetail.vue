@@ -12,6 +12,9 @@
         <div v-for="todo in detailedProject.todos" :key="todo._id" class="todo-item">
             <input type="checkbox" v-model="todo.status" @change="updateStatus(todo)">
             <label>{{ todo.description }}</label>
+            <button class="delete-btn" @click="deleteTodo(todo._id)">
+                <i class="fas fa-trash"></i>
+            </button>
         </div>
 
         <!-- Add new todo -->
@@ -35,7 +38,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import { fetchProjectById, updateTodoStatus, updateProjectTitle } from '@/apis/projectServices';
+import { fetchProjectById, updateTodoStatus, updateProjectTitle, deleteTodoItem } from '@/apis/projectServices';
 
 export default {
     props: {
@@ -84,8 +87,17 @@ export default {
             }
         };
 
+        const deleteTodo = async (todoId) => {
+            try {
+                await deleteTodoItem(props.project._id, todoId);
+                detailedProject.value.todos = detailedProject.value.todos.filter(todo => todo._id !== todoId);
+            } catch (error) {
+              console.error('Error saving project title:', error);
+            }
+        }
+
         onMounted(fetchProject);
-        return { detailedProject, isEditingTitle, newTitle, newTodoDescription, toggleEditTitle, saveTitle, updateStatus };
+        return { detailedProject, isEditingTitle, newTitle, newTodoDescription, toggleEditTitle, saveTitle, updateStatus, deleteTodo };
     },
     methods: {
         close() {
@@ -111,6 +123,10 @@ export default {
     border: 1px solid #ccc;
     border-radius: 0.4rem;
     margin-bottom: 0.5rem;
+}
+
+.todo-item:hover {
+    border: 1px solid #000;
 }
 
 .todo-item input {
@@ -159,5 +175,16 @@ export default {
     border-radius: 0.2rem;
     border: 1px solid #ccc;
     width: 85%;
+    margin: 1.6rem 0;
+}
+
+.delete-btn {
+    cursor: pointer;
+    float: right;
+    border: none;
+}
+
+.delete-btn:hover {
+    color: red;
 }
 </style>

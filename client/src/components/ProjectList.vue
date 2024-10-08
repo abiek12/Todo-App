@@ -4,7 +4,9 @@
         <ul>
             <li v-for="project in projects" :key="project._id" @click="viewProject(project)" class="project">
                 {{ project.title }}
-                <button class="delete-btn" @click.stop="deleteProject(project._id)">x</button>
+                <button class="delete-btn" @click.stop="deleteProject(project._id)">
+                    <i class="fas fa-trash"></i>
+                </button>
             </li>
         </ul>
     </div>
@@ -62,12 +64,10 @@ li {
     padding: 0.1rem 1rem;
     cursor: pointer;
     border: none;
-    border-radius: 0.2rem;
+    background: transparent;
 }
 
 .delete-btn:hover {
     color: red;
-    border: 1px solid red;
-    border-radius: 0.2rem;
 }
 </style>
