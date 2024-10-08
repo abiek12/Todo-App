@@ -57,8 +57,10 @@ li {
 }
 
 .delete-btn {
+    margin: 0;
     color: red;
-    float: right;
+    position: absolute;
+    right: 27rem;
     padding: 0 0.6rem;
     cursor: pointer;
 }
