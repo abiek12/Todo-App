@@ -31,7 +31,7 @@ export class ProjectControllers {
                 const updatedUser = await this.userRepo.updateUser(userId as any, newProject);
                 if(updatedUser) {
                     console.info("INFO::Project Created Successfully!");
-                    return res.status(this.statusCode.SUCCESS).send(newProject);
+                    return res.status(this.statusCode.CREATED).send(newProject);
                 }
             }
         } catch (error) {

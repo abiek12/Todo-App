@@ -31,7 +31,7 @@ export class TodoControllers {
             if(newTodo && newTodo._id) {                
                 const updatedProject = await this.projectRepo.updateProjectByTodo(project._id, newTodo)
                 console.info("INFO::Todo Created Successfully!");
-                return res.status(this.statusCode.SUCCESS).send(updatedProject);
+                return res.status(this.statusCode.CREATED).send(updatedProject);
             }
         } catch (error) {
             console.error("ERROR::Error Creating Todo", error);

@@ -1,7 +1,7 @@
 <template>
     <div class="home">
-        <!-- <CreateProject @projectCreated="fetchProjects"/> -->
         <ProjectList v-if="!selectedProject" :projects="projects" @viewProject="viewProject" @deleteProject="deleteProject"/>
+        <CreateProject v-if="!selectedProject" @projectAdded="addProject"/>
         <ProjectDetail v-if="selectedProject" :project="selectedProject" @close="selectedProject = null"/>
     </div>
 </template>
@@ -9,16 +9,17 @@
 <script>
 import { ref, onMounted} from 'vue';
 import ProjectList from '../components/ProjectList.vue';
-// import CreateProject from '@/components/CreateProject.vue';
+import CreateProject from '@/components/CreateProject.vue';
 import ProjectDetail from '@/components/ProjectDetail.vue';
-import { fetchAllProjects, deleteProjectById } from '@/apis/projectServices';
+import { fetchAllProjects, deleteProjectById, createNewProject } from '@/apis/projectServices';
 
 export default { 
-    components: {ProjectList, ProjectDetail},
+    components: {ProjectList, ProjectDetail, CreateProject},
     setup() {
         const projects = ref([]);
         const selectedProject = ref(null);
 
+        // Fetch all projects
         const fetchProjects = async () => {
             try {
                 const projectsData = await fetchAllProjects();
@@ -27,6 +28,18 @@ export default {
                 console.error("Error fetching projects", error);
             }
         }
+
+        // Add a new project
+        const addProject = async (title) => {
+            try {                                
+                const response = await createNewProject({"title": title});                
+                if (response.status === 201) {
+                    projects.value.push(response.data);
+                }
+            } catch (error) {
+                console.error('Error adding project:', error);
+            }
+        };
 
         // Delete a project by ID
         const deleteProject = async (projectId) => {
@@ -47,15 +60,16 @@ export default {
 
         onMounted(fetchProjects);
 
-        return { projects, fetchProjects, selectedProject, viewProject, deleteProject };
+        return { projects, fetchProjects, selectedProject, viewProject, deleteProject, addProject };
     }
 }
 
 </script>
 
-<style>
+<style scoped>
 .home {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

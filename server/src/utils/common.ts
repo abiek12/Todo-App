@@ -9,6 +9,7 @@ export class httpStatus {
     UNAUTHORIZED = 401;
     CONFLICT = 409;
     SUCCESS = 200;
+    CREATED = 201;
 }
 
 export class commonMessages {

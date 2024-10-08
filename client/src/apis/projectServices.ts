@@ -19,14 +19,14 @@ export const fetchProjectById = async (projectId: string) => {
     return await axios.get(`${API_URL}/api/project/${projectId}`, await authHeaders());
 }
 
-export const createProject = async (projectData: any) => {
-    return axios.post(`${API_URL}/api/project`, projectData, await authHeaders());
+export const createNewProject = async (projectData: any) => {
+    return await axios.post(`${API_URL}/api/project/create`, projectData, await authHeaders());    
 }
 
 export const updateTodoStatus = async (projectId: string, todoId: string, status: boolean) => {
-    return axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, status}, await authHeaders());
+    return await axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, status}, await authHeaders());
 }
 
 export const deleteProjectById = async (projectId: string) => {
-    return axios.delete(`${API_URL}/api/project/${projectId}`, await authHeaders());
+    return await axios.delete(`${API_URL}/api/project/${projectId}`, await authHeaders());
 }
