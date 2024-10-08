@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <!-- <CreateProject @projectCreated="fetchProjects"/> -->
-        <ProjectList v-if="!selectedProject" :projects="projects" @viewProject="viewProject"/>
+        <ProjectList v-if="!selectedProject" :projects="projects" @viewProject="viewProject" @deleteProject="deleteProject"/>
         <ProjectDetail v-if="selectedProject" :project="selectedProject" @close="selectedProject = null"/>
     </div>
 </template>
@@ -11,7 +11,7 @@ import { ref, onMounted} from 'vue';
 import ProjectList from '../components/ProjectList.vue';
 // import CreateProject from '@/components/CreateProject.vue';
 import ProjectDetail from '@/components/ProjectDetail.vue';
-import { fetchAllProjects } from '@/apis/projectServices';
+import { fetchAllProjects, deleteProjectById } from '@/apis/projectServices';
 
 export default { 
     components: {ProjectList, ProjectDetail},
@@ -28,13 +28,26 @@ export default {
             }
         }
 
+        // Delete a project by ID
+        const deleteProject = async (projectId) => {
+          try {
+            const response = await deleteProjectById(projectId);
+            if(response.status === 200) {
+                await fetchProjects();
+                selectedProject.value = null;
+            }
+          } catch (error) {
+            console.error('Error deleting project:', error);
+          }
+        };
+
         const viewProject = (project) => {
             selectedProject.value = project;
         }
 
         onMounted(fetchProjects);
 
-        return { projects, fetchProjects, selectedProject, viewProject };
+        return { projects, fetchProjects, selectedProject, viewProject, deleteProject };
     }
 }
 

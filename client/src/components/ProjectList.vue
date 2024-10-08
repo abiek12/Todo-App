@@ -4,6 +4,7 @@
         <ul>
             <li v-for="project in projects" :key="project._id" @click="viewProject(project)" class="project">
                 {{ project.title }}
+                <button class="delete-btn" @click.stop="deleteProject(project._id)">Delete</button>
             </li>
         </ul>
     </div>
@@ -17,6 +18,9 @@ export default {
     methods: {
         viewProject(project) {
             this.$emit('viewProject', project);
+        },
+        deleteProject(projectId) {
+            this.$emit('deleteProject', projectId);
         },
     },
 };
@@ -50,5 +54,12 @@ ul {
 
 li {
     margin: 0;
+}
+
+.delete-btn {
+    color: red;
+    float: right;
+    padding: 0 0.6rem;
+    cursor: pointer;
 }
 </style>

@@ -56,9 +56,28 @@ export default {
 <style>
 .todo-list {
     background: #f4f4f4;
-    padding: 1.5rem 0;
+    padding: 2.5rem 8rem;
     border-radius: 1rem;
     width: 50%;
     height: 30rem;
+    text-align: start;
+}
+
+.todo-list button {
+    margin: 3rem 0 0 1rem;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+}
+
+.todo-item {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}
+
+.todo-item input {
+    margin-right: 1rem;
+    width: 1rem;
+    height: 1rem;
+    
 }
 </style>
