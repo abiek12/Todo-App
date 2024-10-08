@@ -30,7 +30,7 @@ export default {
 
 <style scoped>
 .project-list {
-    padding: 1.5rem 0;
+    padding: 1.5rem 0 1rem 0;
     border-radius: 1rem;
     width: 50%;
     min-height: auto;

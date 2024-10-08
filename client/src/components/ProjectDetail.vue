@@ -17,18 +17,9 @@
             </button>
         </div>
 
-        <!-- Add new todo -->
-        <!-- <div class="add-todo">
-          <input
-            v-model="newTodoDescription"
-            placeholder="Enter new todo description"
-            @keyup.enter="addTodo"
-          />
-          <button @click="addTodo">Add Todo</button>
-        </div> -->
-
+        <CreateTodo :project="detailedProject" @todoAdded="addTodo" />
         <!-- Close button -->
-        <button class="close-btn" @click="close">Close</button>
+        <button class="close-btn" @click="close">Back</button>
     </div>
     <!-- Loading message -->
     <div class="todo-list" v-else>
@@ -38,9 +29,11 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import { fetchProjectById, updateTodoStatus, updateProjectTitle, deleteTodoItem } from '@/apis/projectServices';
+import CreateTodo from '../components/CreateTodo.vue';
+import { fetchProjectById, updateTodoStatus, updateProjectTitle, deleteTodoItem, addNewTodo } from '@/apis/projectServices';
 
 export default {
+    components: { CreateTodo },
     props: {
         project: { type: Object, required: true },
     },
@@ -87,6 +80,17 @@ export default {
             }
         };
 
+        const addTodo = async (newTodo) => {
+            try {
+                const resData = await addNewTodo(props.project._id, newTodo);
+                if(resData.status === 201) {               
+                    await fetchProject();     
+                }
+            } catch (error) {
+                console.error('Error saving project title:', error);
+            }
+        }
+
         const deleteTodo = async (todoId) => {
             try {
                 await deleteTodoItem(props.project._id, todoId);
@@ -97,7 +101,7 @@ export default {
         }
 
         onMounted(fetchProject);
-        return { detailedProject, isEditingTitle, newTitle, newTodoDescription, toggleEditTitle, saveTitle, updateStatus, deleteTodo };
+        return { detailedProject, isEditingTitle, newTitle, newTodoDescription, toggleEditTitle, saveTitle, updateStatus, deleteTodo, addTodo };
     },
     methods: {
         close() {
@@ -137,11 +141,11 @@ export default {
 
 .close-btn {
     cursor: pointer;
-    border: 1.5px solid #000;
+    border: 1.5px solid #ccc;
     border-radius: 0.2rem;
     background-color: transparent;
     color: #000;
-    margin: 3rem 0 0 1rem;
+    margin-top: 3rem;
     padding: 0.5rem 1.5rem;
 }
 
@@ -154,7 +158,7 @@ export default {
     cursor: pointer;
     border-radius: 0.2rem;
     color: #000;
-    border: 1px solid #000;
+    border: 1px solid #ccc;
     padding: 0.5rem 1.5rem;
 }
 

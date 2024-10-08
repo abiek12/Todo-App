@@ -1,12 +1,12 @@
 <template>
-    <div class="add-project">
+    <div class="add-todo">
         <div v-if="!isAdding">
             <button class="plus-btn" @click="isAdding = true">+</button>
         </div>
 
         <div v-if="isAdding">
-            <input type="text" v-model="newProjectTitle" placeholder="Enter project title" />
-            <button class="add-btn" @click="submitProject">Add Project</button>
+            <input type="text" v-model="newTodo" placeholder="Enter todo description" />
+            <button class="add-btn" @click="addTodo(newTodo)">Add Todo</button>
             <button class="cancel-btn" @click="isAdding = false">Cancel</button>
         </div>
     </div>
@@ -16,51 +16,41 @@
 import { ref } from 'vue';
 
 export default {
-    emits: ['projectAdded'],
-    setup(props, { emit }) {
+    setup(props) {
         const isAdding = ref(false);
-        const newProjectTitle = ref('');
-
-        const submitProject = () => {
-            if (newProjectTitle.value.trim() === '') {
-                alert('Please enter a project title');
-                return;
-            }
-
-            // Emit event with the new project title
-            emit('projectAdded', newProjectTitle.value);
-
-            // Reset the input and close the form
-            newProjectTitle.value = '';
-            isAdding.value = false;
-        };
-
+        const newTodo = ref('');
         return {
             isAdding,
-            newProjectTitle,
-            submitProject,
+            newTodo,
         };
+    },
+    methods: {
+        addTodo(newTodo) {
+            this.$emit('todoAdded', newTodo);
+            this.newTodo = '';
+            this.isAdding = false;
+        }
     }
 };
 </script>
 
 <style scoped>
-.add-project {
+.add-todo {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     width: 100%;
 }
 
-.add-project input {
+.add-todo input {
     padding: 0.5rem;
     margin-right: 1rem;
-    width: 402px;
+    width: 32.5rem;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-.add-project button {
+.add-todo button {
     padding: 0.5rem 1rem;
     border-radius: 0.2rem;
     cursor: pointer;
@@ -71,7 +61,7 @@ export default {
     color: #000;
     border: 1.5px solid #ccc;
     font-weight: 600;
-    width: 39rem;
+    width: 45.2rem;
 }
 
 .plus-btn:hover {
@@ -83,13 +73,13 @@ export default {
     border: none;
     background-color: #4CAF50;
     color: white;
+    margin-right: 0.5rem;
 }
 
 .cancel-btn {
     border: none;
     background-color: #f44336;
     color: white;
-    margin-left: 0.5rem;
 }
 
 .add-project button:hover {
