@@ -16,7 +16,7 @@
 import { ref } from 'vue';
 
 export default {
-    setup(props) {
+    setup() {
         const isAdding = ref(false);
         const newTodo = ref('');
         return {

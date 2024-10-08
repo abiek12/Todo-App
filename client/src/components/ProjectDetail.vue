@@ -150,8 +150,8 @@ export default {
 }
 
 .close-btn:hover {
-    border: 1.5px solid red;
-    color: red;
+    border: 1.5px solid #000;
+    color: #000;
 }
 
 .edit-btn {
