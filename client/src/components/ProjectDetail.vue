@@ -1,11 +1,31 @@
 <template>
     <div class="todo-list" v-if="detailedProject">
-        <h1>{{ detailedProject.title }}</h1>
+        <div class="title-container">
+            <h1 v-if="!isEditingTitle">{{ detailedProject.title }}</h1>
+            <input class="title-input" v-else v-model="newTitle" @keyup.enter="updateTitle" placeholder="Edit project title"/>
+
+            <button class="edit-btn" @click="toggleEditTitle">
+              <i :class="isEditingTitle ? 'fas fa-save' : 'fas fa-edit'"></i>
+            </button>
+        </div>
+        
         <div v-for="todo in detailedProject.todos" :key="todo._id" class="todo-item">
             <input type="checkbox" v-model="todo.status" @change="updateStatus(todo)">
             <label>{{ todo.description }}</label>
         </div>
-        <button @click="close">Close</button>
+
+        <!-- Add new todo -->
+        <!-- <div class="add-todo">
+          <input
+            v-model="newTodoDescription"
+            placeholder="Enter new todo description"
+            @keyup.enter="addTodo"
+          />
+          <button @click="addTodo">Add Todo</button>
+        </div> -->
+
+        <!-- Close button -->
+        <button class="close-btn" @click="close">Close</button>
     </div>
     <!-- Loading message -->
     <div class="todo-list" v-else>
@@ -15,7 +35,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import { fetchProjectById, updateTodoStatus } from '@/apis/projectServices';
+import { fetchProjectById, updateTodoStatus, updateProjectTitle } from '@/apis/projectServices';
 
 export default {
     props: {
@@ -23,6 +43,9 @@ export default {
     },
     setup(props) {
         const detailedProject = ref(null);
+        const isEditingTitle = ref(false);
+        const newTitle = ref('');
+        const newTodoDescription = ref('');
         
         const fetchProject = async () => {
             try {
@@ -42,8 +65,27 @@ export default {
             }
         }
 
+        const toggleEditTitle = () => {
+            if (isEditingTitle.value) {
+              saveTitle();
+            }
+            isEditingTitle.value = !isEditingTitle.value;
+        };
+
+        const saveTitle = async () => {
+            try {
+              if (newTitle.value !== detailedProject.value.title) {
+                await updateProjectTitle(props.project._id, newTitle.value);
+                detailedProject.value.title = newTitle.value;
+              }
+              isEditingTitle.value = false;
+            } catch (error) {
+              console.error('Error saving project title:', error);
+            }
+        };
+
         onMounted(fetchProject);
-        return { detailedProject, updateStatus };
+        return { detailedProject, isEditingTitle, newTitle, newTodoDescription, toggleEditTitle, saveTitle, updateStatus };
     },
     methods: {
         close() {
@@ -53,7 +95,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .todo-list {
     background: #f4f4f4;
     padding: 2.5rem 8rem;
@@ -61,12 +103,6 @@ export default {
     width: 50%;
     height: 30rem;
     text-align: start;
-}
-
-.todo-list button {
-    margin: 3rem 0 0 1rem;
-    padding: 0.5rem 1.5rem;
-    cursor: pointer;
 }
 
 .todo-item {
@@ -77,7 +113,48 @@ export default {
 .todo-item input {
     margin-right: 1rem;
     width: 1rem;
-    height: 1rem;
-    
+    height: 1rem;   
+}
+
+.close-btn {
+    cursor: pointer;
+    border: 1.5px solid #000;
+    border-radius: 0.2rem;
+    background-color: transparent;
+    color: #000;
+    margin: 3rem 0 0 1rem;
+    padding: 0.5rem 1.5rem;
+}
+
+.close-btn:hover {
+    border: 1.5px solid red;
+    color: red;
+}
+
+.edit-btn {
+    cursor: pointer;
+    border-radius: 0.2rem;
+    color: #000;
+    border: 1px solid #000;
+    padding: 0.5rem 1.5rem;
+}
+
+.edit-btn:hover {
+    border: 1px solid blue;
+    color: blue;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.title-input {
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    border: 1px solid #ccc;
+    width: 85%;
 }
 </style>

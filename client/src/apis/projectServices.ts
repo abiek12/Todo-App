@@ -30,3 +30,10 @@ export const updateTodoStatus = async (projectId: string, todoId: string, status
 export const deleteProjectById = async (projectId: string) => {
     return await axios.delete(`${API_URL}/api/project/${projectId}`, await authHeaders());
 }
+
+export const updateProjectTitle = async (projectId: string, title: any) => {    
+    const resData = await axios.put(`${API_URL}/api/project/${projectId}`, {title}, await authHeaders());
+    console.log(resData);
+    
+    return resData
+}
