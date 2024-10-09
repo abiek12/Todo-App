@@ -22,9 +22,7 @@
         <button class="close-btn" @click="close">Back</button>
     </div>
     <!-- Loading message -->
-    <div class="todo-list" v-else>
-      Loading project details...
-    </div>
+    <div v-else class="spinner"></div>
 </template>
 
 <script>
@@ -190,5 +188,20 @@ export default {
 
 .delete-btn:hover {
     color: red;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 3rem;
+  height: 3rem;
+  animation: spin 1s linear infinite;
+  margin-top: 5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>

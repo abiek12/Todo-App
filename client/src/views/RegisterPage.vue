@@ -112,7 +112,7 @@ input {
 
 .link {
   text-decoration: none;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #000;
   margin-right: auto;
 }

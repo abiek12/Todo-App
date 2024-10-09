@@ -13,7 +13,10 @@
                 <input type="password" v-model="password" placeholder="Enter your password" required>
             </div>
             <router-link class="link" to="/register">Don't have an account? Register here</router-link>
-            <button class="login-btn" type="submit">Login</button>
+            <button class="login-btn" type="submit">
+                <div class="" v-if="!loading">Login</div>
+                <div v-if="loading" class="spinner"></div>
+            </button>
         </form>
     </div>
 </template>
@@ -30,33 +33,36 @@ export default {
         const successMessage = ref('');
         const errorMessage = ref('');
         const router = useRouter();
+        const loading = ref(false);
 
         const login = async () => {
             try {
+                loading.value = true;
                 const response = await loginUser({ email: email.value, password: password.value });
-                if(response.status === 200) {                    
+                setTimeout(() => {
+                    if(response.status === 200) {                    
                     localStorage.setItem('accessToken', response.data.accessToken);
                     localStorage.setItem('refreshToken', response.data.refreshToken);
                     successMessage.value = "User logged in successfully.";
-                    alert(response.data.message);
                     // Redirect to login or another page
-                    setTimeout(() => {
-                        router.push('/home');
-                    },1000)
+                    router.push('/');
                 } else {
                     successMessage.value = 'User registration failed. Please try again.'
                     alert(response.data.message);
                 }
+                },1000);
             } catch (error) {
                 errorMessage.value = error.response.data;
                 successMessage.value = '';
                 alert(errorMessage.value);
 
                 console.error('Error during registration', error);
+            } finally {
+                loading.value = false;
             }
         };
 
-        return { email, password, login };
+        return { email, password, login, loading };
     }
 }
 </script>
@@ -98,6 +104,9 @@ input {
     width: 10rem;
     margin-top: 1rem;
     border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-btn:hover {
@@ -108,7 +117,7 @@ input {
 
 .link {
   text-decoration: none;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #000;
   margin-right: auto;
 }
@@ -116,4 +125,19 @@ input {
 .link:hover {
   color: blue;
 }
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 1rem;
+  height: 1rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 </style>

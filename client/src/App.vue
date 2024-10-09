@@ -1,10 +1,41 @@
 <template>
-  <nav>
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/register">Register</router-link>
+  <nav v-if="isAuthenticated">
+    <router-link to="/">Home</router-link>
+    <button @click="logout">Logout</button>
   </nav>
   <router-view/>
 </template>
+
+<script>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+export default {
+  setup() {
+    const router = useRouter();
+    const isAuthenticated = ref(false);
+
+    const checkAuth = async () => {
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (accessToken && refreshToken) {
+        isAuthenticated.value = true;
+      }
+    };
+
+    onMounted(checkAuth);
+
+    const logout= async ()=>{
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      // Redirect to the login page
+      router.push('/login');
+    }
+
+    return { logout, isAuthenticated, checkAuth };
+  }
+}
+</script>
 
 <style>
 *{
@@ -16,6 +47,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-top: 5rem;
 }
 
 nav {

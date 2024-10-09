@@ -2,9 +2,10 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/home',
+    path: '/',
     name: 'home',
-    component: () => import(/* webpackChunkName: "home" */ '../views/HomePage.vue')
+    component: () => import(/* webpackChunkName: "home" */ '../views/HomePage.vue'),
+    meta: { requiresAuth: true } 
   },
   {
     path: '/login',
@@ -24,6 +25,21 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+// Navigation Guard
+router.beforeEach((to, from, next) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (accessToken && to.name === 'login') {
+    return next({ name: 'home' });
+  }
+
+  if (to.meta.requiresAuth && !accessToken) {
+    return next({ name: 'login' });
+  }
+
+  next();
 })
 
 export default router
