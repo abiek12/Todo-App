@@ -45,7 +45,7 @@ export default {
 .add-todo input {
     padding: 0.5rem;
     margin-right: 1rem;
-    width: 32.5rem;
+    width: 32rem;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
@@ -61,7 +61,7 @@ export default {
     color: #000;
     border: 1.5px solid #ccc;
     font-weight: 600;
-    width: 45.2rem;
+    width: 44.8rem;
 }
 
 .plus-btn:hover {

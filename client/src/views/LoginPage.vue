@@ -73,7 +73,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 2rem;
+    padding-top: 3rem;
 }
 
 .login-form {
@@ -81,7 +81,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 1.4rem;
 }
 
 label {

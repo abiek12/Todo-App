@@ -68,7 +68,6 @@ export default {
         return { projects, fetchProjects, selectedProject, viewProject, deleteProject, addProject, loading };
     }
 }
-
 </script>
 
 <style scoped>

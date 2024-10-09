@@ -55,7 +55,7 @@ export default {
 .add-project input {
     padding: 0.5rem;
     margin-right: 1rem;
-    width: 402px;
+    width: 410px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }

@@ -1,6 +1,5 @@
 <template>
   <nav v-if="isAuthenticated">
-    <router-link to="/">Home</router-link>
     <button @click="logout">Logout</button>
   </nav>
   <router-view/>
@@ -51,15 +50,22 @@ export default {
 }
 
 nav {
-  padding: 30px;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+nav button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  border: 1px solid #ccc;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+nav button:hover {
+  border: 1px solid red;
+  color: red;
 }
 </style>
