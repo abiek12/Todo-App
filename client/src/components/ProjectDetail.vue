@@ -33,7 +33,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import CreateTodo from '../components/CreateTodo.vue';
-import { fetchProjectById, updateTodoStatus, updateProjectTitle, deleteTodoItem, addNewTodo } from '@/apis/projectServices';
+import { fetchProjectById, updateTodoStatus, updateProjectTitle, deleteTodoItem, addNewTodo, generateGist } from '@/apis/projectServices';
 
 export default {
     components: { CreateTodo },
@@ -105,8 +105,31 @@ export default {
             }
         }
 
+        const exportAsGist = async () => {
+            try {
+                const resData = await generateGist(props.project._id);
+                console.log(resData);
+                
+                if(resData.status === 200) {
+                    alert("Gist created. Redirecting...");
+                    window.open(resData.data);
+                }
+            } catch (error) {
+                console.error('Error saving project title:', error);
+            }
+        }
+
         onMounted(fetchProject);
-        return { detailedProject, isEditingTitle, newTitle, newTodoDescription, toggleEditTitle, saveTitle, updateStatus, deleteTodo, addTodo };
+        return { detailedProject,
+             isEditingTitle, 
+             newTitle, 
+             newTodoDescription, 
+             toggleEditTitle, 
+             saveTitle, 
+             updateStatus, 
+             deleteTodo, 
+             addTodo, 
+             exportAsGist };
     },
     methods: {
         close() {

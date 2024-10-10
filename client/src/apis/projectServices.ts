@@ -42,3 +42,7 @@ export const deleteTodoItem = async (projectId: string, todoId: string) => {
 export const addNewTodo = async (projectId: string, description: any) => {
     return await axios.post(`${API_URL}/api/project/${projectId}/todo`, {description}, await authHeaders());
 }
+
+export const generateGist = async (projectId: string) => {
+    return await axios.get(`${API_URL}/api/project/exportAsGist/${projectId}`, await authHeaders());
+}
