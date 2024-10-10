@@ -53,28 +53,4 @@ export class ProjectServices {
             throw error;
         }
     }
-
-    createMarkdown = async (projectTitle: string, pendingTodos: any, completedTodos: any): Promise<any> => {
-        try {
-            const totalTodos = pendingTodos.length + completedTodos.length;
-            const completedCount = completedTodos.length;
-
-            const markdown = `
-                # ${projectTitle}
-
-                Summary: ${completedCount}/${totalTodos} todos completed
-
-                ## Pending
-                ${pendingTodos.map((pendingTodo: any) => `- [ ] ${pendingTodo.description}`).join('\n')}
-
-                ## Completed
-                ${completedTodos.map((completedTodo: any) => `- [x] ${completedTodo.description}`).join('\n')}
-                    `.trim();
-
-            return markdown;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    }
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { commonMessages, createPrivateGist, httpStatus } from "../utils/common";
+import { commonMessages, createMarkdown, createPrivateGist, httpStatus } from "../utils/common";
 import { ProjectServices } from "../services/projectServices";
 import { UserRepository } from "../models/repositories/userRepository";
 import mongoose from "mongoose";
@@ -160,7 +160,7 @@ export class ProjectControllers {
             const completedTodos: any = project.todos.filter((todo: { status: boolean; }) => todo.status === true);
             const projectTitle: string = project.title;
 
-            const markdownContent: any = await this.projectService.createMarkdown(projectTitle, pendingTodos, completedTodos);
+            const markdownContent: any = await createMarkdown(projectTitle, pendingTodos, completedTodos);
             const gistUrl = await createPrivateGist('Project Summary', markdownContent, projectTitle);
 
             console.info("INFO::Gist Created Successfully");

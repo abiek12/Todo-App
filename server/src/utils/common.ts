@@ -38,6 +38,30 @@ export const generateRefreshToken = async (userId: string): Promise<string> => {
     return jwt.sign({ userId }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
 }
 
+export const createMarkdown = async (projectTitle: string, pendingTodos: any, completedTodos: any): Promise<any> => {
+    try {
+        const totalTodos = pendingTodos.length + completedTodos.length;
+        const completedCount = completedTodos.length;
+
+        const markdown = `
+            # ${projectTitle}
+
+            Summary: ${completedCount}/${totalTodos} todos completed
+
+            ## Pending
+            ${pendingTodos.map((pendingTodo: any) => `- [ ] ${pendingTodo.description}`).join('\n')}
+
+            ## Completed
+            ${completedTodos.map((completedTodo: any) => `- [x] ${completedTodo.description}`).join('\n')}
+                `.trim();
+
+        return markdown;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 export const createPrivateGist = async (description: string, markdownContent: any, projectTitle: string): Promise<string> => {
     try {
         const token = process.env.GITHUB_TOKEN;
