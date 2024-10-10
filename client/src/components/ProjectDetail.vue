@@ -4,9 +4,14 @@
             <h1 v-if="!isEditingTitle">{{ detailedProject.title }}</h1>
             <input class="title-input" v-else v-model="newTitle" @keyup.enter="saveTitle" placeholder="Edit project title"/>
 
-            <button class="edit-btn" @click="toggleEditTitle">
-              <i :class="isEditingTitle ? 'fas fa-save' : 'fas fa-edit'"></i>
-            </button>
+            <div class="button-container">
+                <button class="edit-btn" @click="toggleEditTitle">
+                  <i :class="isEditingTitle ? 'fas fa-save' : 'fas fa-edit'"></i>
+                </button>
+                <button class="edit-btn" @click="exportAsGist">
+                  export as gist
+                </button>
+            </div>
         </div>
         
         <div v-for="todo in detailedProject.todos" :key="todo._id" class="todo-item">
@@ -205,5 +210,10 @@ export default {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.button-container {
+    display: flex;
+    gap: 1rem;
 }
 </style>

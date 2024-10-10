@@ -144,7 +144,7 @@ export class ProjectControllers {
 
     exportAsGist = async (req: Request, res: Response) => {
         try {
-            const { projectId } = req.body;
+            const { projectId } = req.params;
             if(!projectId) {
                 console.error("ERROR:: Project Id is missing!")
                 return res.status(this.statusCode.BAD_REQUEST).send("Project Id is missing!");

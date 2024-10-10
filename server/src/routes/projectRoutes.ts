@@ -17,6 +17,6 @@ projectRouter.post("/:_id/todo", basicAuth, todoController.addTodo);
 projectRouter.patch("/:_id/todo", basicAuth, todoController.updateTodo);
 projectRouter.delete("/:_id/todo", basicAuth, todoController.removeTodo);
 
-projectRouter.post("/exportAsGist/:projectId", basicAuth, projectController.exportAsGist);
+projectRouter.get("/exportAsGist/:projectId", basicAuth, projectController.exportAsGist);
 
 export default projectRouter;
