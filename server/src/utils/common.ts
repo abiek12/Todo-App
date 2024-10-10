@@ -43,17 +43,17 @@ export const createMarkdown = async (projectTitle: string, pendingTodos: any, co
         const totalTodos = pendingTodos.length + completedTodos.length;
         const completedCount = completedTodos.length;
 
-        const markdown = `
-            # ${projectTitle}
+const markdown = `
+# ${projectTitle}
 
-            Summary: ${completedCount}/${totalTodos} todos completed
+Summary: ${completedCount} / ${totalTodos} todos completed.
 
-            ## Pending
-            ${pendingTodos.map((pendingTodo: any) => `- [ ] ${pendingTodo.description}`).join('\n')}
+## Pending
+${pendingTodos.map((pendingTodo: any) => `- [ ] ${pendingTodo.description}`).join('\n')}
 
-            ## Completed
-            ${completedTodos.map((completedTodo: any) => `- [x] ${completedTodo.description}`).join('\n')}
-                `.trim();
+## Completed
+${completedTodos.map((completedTodo: any) => `- [x] ${completedTodo.description}`).join('\n')}
+`.trim();
 
         return markdown;
     } catch (error) {
