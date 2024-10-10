@@ -20,13 +20,13 @@ export class AuthServices {
         }
     }
 
-    userLogin = async (email: string, password: string): Promise<IUser | null> => {
+    userLogin = async (email: string, password: string): Promise<IUser | "INVALID_PASSWORD" | null> => {
         try {
             const user = await this.userRepo.findUserByEmail(email);
             if(!user) return null;
 
             const isPasswordValid = await comparePassword(password, user.password);
-            if(!isPasswordValid) return null;
+            if(!isPasswordValid) return "INVALID_PASSWORD";
 
             return user;
         } catch (error) {

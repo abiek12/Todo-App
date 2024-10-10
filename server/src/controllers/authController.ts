@@ -47,6 +47,12 @@ export class authControllers {
             }
 
             const user = await this.authServices.userLogin(email, password);
+
+            if (user === "INVALID_PASSWORD") {
+                console.error("ERROR::Invalid password!");
+                return res.status(this.statusCode.UNAUTHORIZED).send("Invalid password!");
+            }
+            
             if(!user || !user._id) {
                 console.error("ERROR::User doesn't exist!")
                 return res.status(this.statusCode.NOT_FOUND).send("User doesn't exist!");
