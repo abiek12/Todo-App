@@ -2,7 +2,7 @@
     <div class="todo-list" v-if="detailedProject">
         <div class="title-container">
             <h1 v-if="!isEditingTitle">{{ detailedProject.title }}</h1>
-            <input class="title-input" v-else v-model="newTitle" @keyup.enter="updateTitle" placeholder="Edit project title"/>
+            <input class="title-input" v-else v-model="newTitle" @keyup.enter="saveTitle" placeholder="Edit project title"/>
 
             <button class="edit-btn" @click="toggleEditTitle">
               <i :class="isEditingTitle ? 'fas fa-save' : 'fas fa-edit'"></i>
@@ -60,8 +60,10 @@ export default {
         }
 
         const toggleEditTitle = () => {
-            if (isEditingTitle.value) {
-              saveTitle();
+            if (!isEditingTitle.value) {
+                newTitle.value = detailedProject.value.title;
+            } else {
+                saveTitle();
             }
             isEditingTitle.value = !isEditingTitle.value;
         };
