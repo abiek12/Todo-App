@@ -16,19 +16,30 @@ export default {
 
     const checkAuth = async () => {
       const accessToken = localStorage.getItem('accessToken');
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (accessToken && refreshToken) {
+      if (accessToken) {
         isAuthenticated.value = true;
+      } else {
+        isAuthenticated.value = false;
+        router.push('/login');
       }
     };
 
-    onMounted(checkAuth);
+    const handleAuthChange = () => {
+      checkAuth();
+    };
+
+    onMounted(() => {
+      checkAuth();
+      window.addEventListener('authChange', handleAuthChange);
+    });
+
 
     const logout= async ()=>{
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      // Redirect to the login page
+      isAuthenticated.value = false;
       router.push('/login');
+      window.dispatchEvent(new Event('authChange'));
     }
 
     return { logout, isAuthenticated, checkAuth };

@@ -2,7 +2,7 @@
     <div class="home">
         <ProjectList v-if="!selectedProject" :projects="projects" @viewProject="viewProject" @deleteProject="deleteProject"/>
         <CreateProject v-if="!selectedProject" @projectAdded="addProject"/>
-        <ProjectDetail v-if="selectedProject" :project="selectedProject" @close="selectedProject = null"/>
+        <ProjectDetail v-if="selectedProject" :project="selectedProject" @close="close"/>
         <!-- Loading message -->
         <div v-if="loading" class="spinner"></div>
     </div>
@@ -59,13 +59,19 @@ export default {
           }
         };
 
+        const close = async () => {
+            selectedProject.value = null;
+            projects.value = [];
+            await fetchProjects();
+        }
+
         const viewProject = (project) => {
             selectedProject.value = project;
         }
 
         onMounted(fetchProjects);
 
-        return { projects, fetchProjects, selectedProject, viewProject, deleteProject, addProject, loading };
+        return { projects, fetchProjects, selectedProject, viewProject, deleteProject, addProject, loading, close };
     }
 }
 </script>

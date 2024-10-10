@@ -46,6 +46,7 @@ export default {
                     successMessage.value = "User logged in successfully.";
                     // Redirect to login or another page
                     router.push('/');
+                    window.dispatchEvent(new Event('authChange'));
                 } else {
                     successMessage.value = 'User registration failed. Please try again.'
                     alert(response.data.message);
