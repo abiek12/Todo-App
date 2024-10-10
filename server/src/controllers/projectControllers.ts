@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { commonMessages, httpStatus } from "../utils/common";
+import { commonMessages, createPrivateGist, httpStatus } from "../utils/common";
 import { ProjectServices } from "../services/projectServices";
 import { UserRepository } from "../models/repositories/userRepository";
 import mongoose from "mongoose";
@@ -136,6 +136,35 @@ export class ProjectControllers {
             await this.userRepo.deleteProjectFromUser(userId as any, projectById);
             console.info("INFO::Project Deleted Successfully!");
             return res.status(this.statusCode.SUCCESS).send("Project Deleted Successfully!");
+        } catch (error) {
+            console.error("ERROR::Error Deleting Project");
+            return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
+        }
+    }
+
+    exportAsGist = async (req: Request, res: Response) => {
+        try {
+            const { projectId } = req.body;
+            if(!projectId) {
+                console.error("ERROR:: Project Id is missing!")
+                return res.status(this.statusCode.BAD_REQUEST).send("Project Id is missing!");
+            }
+
+            const project: any = await this.projectService.getSpecificProject(projectId);
+            if(!project) {
+                console.error("ERROR::Project doesn't exist!");
+                return res.status(this.statusCode.NOT_FOUND).send("Project doesn't exist!");
+            }
+
+            const pendingTodos: any = project.todos.filter((todo: { status: boolean; }) => todo.status === false);
+            const completedTodos: any = project.todos.filter((todo: { status: boolean; }) => todo.status === true);
+            const projectTitle: string = project.title;
+
+            const markdownContent: any = await this.projectService.createMarkdown(projectTitle, pendingTodos, completedTodos);
+            const gistUrl = await createPrivateGist('Project Summary', markdownContent, projectTitle);
+
+            console.info("INFO::Gist Created Successfully");
+            return res.status(this.statusCode.SUCCESS).send(gistUrl);
         } catch (error) {
             console.error("ERROR::Error Deleting Project");
             return res.status(this.statusCode.INTERNAL_ERROR).send(this.messages.INTERNAL_ERORR);
