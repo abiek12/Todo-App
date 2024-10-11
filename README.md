@@ -2,13 +2,14 @@
 
 This application allows users to manage projects and their associated todos. It provides the following functionalities:
 1. **Create a new project**
+   - Add, Update Title, and Delete
 2. **Manage todos within a project**:
-   - Add, Update, and Mark todos as complete
+   - Add, Edit, Delete and Mark todos as complete
 3. **Export project summary** to GitHub as a secret gist in Markdown format
 
 ## Features
 
-- **User authentication** using Basic Auth
+- **User authentication** using jwt
 - **CRUD operations** on projects and todos
 - **Export project summary** as a secret gist on GitHub
 - **Project and Todo Management** with task status tracking
