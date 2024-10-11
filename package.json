@@ -1,0 +1,22 @@
+{
+  "name": "hatio-task",
+  "version": "1.0.0",
+  "description": "This application allows users to manage projects and their associated todos. It provides the following functionalities:\r 1. **Create a new project**\r 2. **Manage todos within a project**:\r    - Add, Update, and Mark todos as complete\r 3. **Export project summary** to GitHub as a secret gist in Markdown format",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client && npm install",
+    "install": "npm run install:server && npm run install:client",
+    "server": "cd server && npm run start",
+    "client": "cd client && npm run serve",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "rimraf": "^6.0.1"
+  }
+}
