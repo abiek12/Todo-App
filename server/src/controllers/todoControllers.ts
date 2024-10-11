@@ -63,13 +63,14 @@ export class TodoControllers {
             }
 
             let updatedTodo;
-            if(status) {
+            if(status !== undefined) {
                 updatedTodo = await this.todoRepo.updateTodo(todo._id as string, {status});
-            }
-
-            if(description) {
+            } else if (description) {
                 updatedTodo = await this.todoRepo.editTodo(todo._id as string, {description});
-            }            
+            } else {
+                console.error("ERROR::Mandatatory fields are missing!");
+                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
+            }   
 
             if(updatedTodo) {
                 console.info("INFO::Todo Status Updated Successfully!");
