@@ -64,12 +64,12 @@ export class TodoControllers {
 
             let updatedTodo;
             if(status) {
-                updatedTodo = await this.todoRepo.editTodo(todo._id as string, {status});
+                updatedTodo = await this.todoRepo.updateTodo(todo._id as string, {status});
             }
 
             if(description) {
                 updatedTodo = await this.todoRepo.editTodo(todo._id as string, {description});
-            }
+            }            
 
             if(updatedTodo) {
                 console.info("INFO::Todo Status Updated Successfully!");
