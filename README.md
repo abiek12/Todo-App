@@ -28,8 +28,12 @@ This project uses the following technologies:
 Before you begin, ensure you have met the following requirements:
 
 - **Node.js**: Install from [https://nodejs.org](https://nodejs.org)
-- **MongoDB**: Install MongoDB from [https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
-
+- **Vue.js**: You need Vue CLI to run the frontend. Install Vue CLI by running the following command:
+  
+    ```bash
+    npm install -g @vue/cli
+    ```
+    
 ## Setup
 
 1. Clone the repository:
