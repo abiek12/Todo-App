@@ -206,7 +206,7 @@ export default {
     padding: 0.5rem;
     border-radius: 0.2rem;
     border: 1px solid #ccc;
-    width: 85%;
+    width: 30rem;
     margin: 1.6rem 0;
 }
 
