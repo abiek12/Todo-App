@@ -103,7 +103,6 @@ export default {
                 await updateProjectTitle(props.project._id, newTitle.value);
                 detailedProject.value.title = newTitle.value;
               }
-              isEditingTitle.value = false;
             } catch (error) {
               console.error('Error saving project title:', error);
             }
