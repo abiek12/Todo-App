@@ -40,7 +40,8 @@ Before you begin, ensure you have met the following requirements:
 
     ```bash
     git clone https://github.com/abiek12/Todo-App-Hatio-Take-Home-Challenge-.git
-    cd your-repository-name
+    
+    cd Todo-App-Hatio-Take-Home-Challenge
     ```
     
 2. Navigate to the project directory::
