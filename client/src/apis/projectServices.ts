@@ -27,6 +27,10 @@ export const updateTodoStatus = async (projectId: string, todoId: string, status
     return await axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, status}, await authHeaders());
 }
 
+export const updateTodoDescription = async (projectId: string, todoId: string, description: string) => {
+    return await axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, description}, await authHeaders());
+}
+
 export const deleteProjectById = async (projectId: string) => {
     return await axios.delete(`${API_URL}/api/project/${projectId}`, await authHeaders());
 }
