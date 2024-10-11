@@ -48,7 +48,7 @@ Before you begin, ensure you have met the following requirements:
     cd Todo-App-Hatio-Take-Home-Challenge
     ```
 
-3. Install dependencies on both client and server:
+3. Install dependencies:
 
     ```bash
     npm install
