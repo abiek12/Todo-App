@@ -42,7 +42,7 @@ export class TodoControllers {
     // Update todo status
     updateTodo = async (req: Request, res: Response) => {
         try {
-            const {todoId, status} = req.body;
+            const {todoId, status, description} = req.body;
             const {_id} = req.params;
 
             if(!_id || !todoId) {
@@ -62,7 +62,16 @@ export class TodoControllers {
                 return res.status(this.statusCode.NOT_FOUND).send("Todo doesn't exist!");
             }
 
-            const updatedTodo = await this.todoRepo.editTodo(todo._id as string, {status});
+            let updatedTodo;
+            if(status !== undefined) {
+                updatedTodo = await this.todoRepo.updateTodo(todo._id as string, {status});
+            } else if (description) {
+                updatedTodo = await this.todoRepo.editTodo(todo._id as string, {description});
+            } else {
+                console.error("ERROR::Mandatatory fields are missing!");
+                return res.status(this.statusCode.BAD_REQUEST).send("Mandatory fields are missing!");
+            }   
+
             if(updatedTodo) {
                 console.info("INFO::Todo Status Updated Successfully!");
                 return res.status(this.statusCode.SUCCESS).send(project);

@@ -2,13 +2,14 @@
 
 This application allows users to manage projects and their associated todos. It provides the following functionalities:
 1. **Create a new project**
+   - Add, Update Title, and Delete
 2. **Manage todos within a project**:
-   - Add, Update, and Mark todos as complete
+   - Add, Edit, Delete and Mark todos as complete
 3. **Export project summary** to GitHub as a secret gist in Markdown format
 
 ## Features
 
-- **User authentication** using Basic Auth
+- **User authentication** using jwt
 - **CRUD operations** on projects and todos
 - **Export project summary** as a secret gist on GitHub
 - **Project and Todo Management** with task status tracking
@@ -40,8 +41,6 @@ Before you begin, ensure you have met the following requirements:
 
     ```bash
     git clone https://github.com/abiek12/Todo-App-Hatio-Take-Home-Challenge-.git
-    
-    cd Todo-App-Hatio-Take-Home-Challenge
     ```
     
 2. Navigate to the project directory::
@@ -50,13 +49,13 @@ Before you begin, ensure you have met the following requirements:
     cd Todo-App-Hatio-Take-Home-Challenge
     ```
 
-3. Install dependencies on both client and server:
+3. Install dependencies:
 
     ```bash
     npm install
     ```
 
-4. Create a `.env` file in the root of your project and add the necessary environment variables (if any):
+4. Create a `.env` file in the server directory of your project and add the necessary environment variables (if any):
 
     ```env
     PORT=3000

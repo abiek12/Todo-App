@@ -10,8 +10,12 @@ export class todoRepository {
         return await Todo.findById(_id);
     }
 
+    updateTodo = async (_id: string, update: Partial<ITodo>): Promise<ITodo | null> => {
+        return await Todo.findByIdAndUpdate(_id, {status: update.status});
+    }
+
     editTodo = async (_id: string, update: Partial<ITodo>): Promise<ITodo | null> => {
-        return await Todo.findByIdAndUpdate(_id, {status: update.status, description: update.description});
+        return await Todo.findByIdAndUpdate(_id, {description: update.description});
     }
 
     deleteTodo = async (_id: string): Promise<void> => {
