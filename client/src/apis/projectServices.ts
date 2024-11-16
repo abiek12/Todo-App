@@ -19,13 +19,7 @@ export const fetchProjectById = async (projectId: string) => {
     return await axios.get(`${API_URL}/api/project/${projectId}`, await authHeaders());
 }
 
-interface ProjectData {
-    title: string;
-    description: string;
-    // Add other fields as necessary
-}
-
-export const createNewProject = async (projectData: ProjectData) => {
+export const createNewProject = async (projectData: any) => {
     return await axios.post(`${API_URL}/api/project/create`, projectData, await authHeaders());    
 }
 
@@ -33,15 +27,11 @@ export const updateTodoStatus = async (projectId: string, todoId: string, status
     return await axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, status}, await authHeaders());
 }
 
-export const updateTodoDescription = async (projectId: string, todoId: string, description: string) => {
-    return await axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, description}, await authHeaders());
-}
-
 export const deleteProjectById = async (projectId: string) => {
     return await axios.delete(`${API_URL}/api/project/${projectId}`, await authHeaders());
 }
 
-export const updateProjectTitle = async (projectId: string, title: string) => {    
+export const updateProjectTitle = async (projectId: string, title: any) => {    
      return await axios.put(`${API_URL}/api/project/${projectId}`, {title}, await authHeaders());    
 }
 
@@ -49,7 +39,7 @@ export const deleteTodoItem = async (projectId: string, todoId: string) => {
     return await axios.delete(`${API_URL}/api/project/${projectId}/todo?todoId=${todoId}`, await authHeaders());
 }
 
-export const addNewTodo = async (projectId: string, description: string) => {
+export const addNewTodo = async (projectId: string, description: any) => {
     return await axios.post(`${API_URL}/api/project/${projectId}/todo`, {description}, await authHeaders());
 }
 
