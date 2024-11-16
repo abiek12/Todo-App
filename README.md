@@ -59,7 +59,7 @@ Before you begin, ensure you have met the following requirements:
 
     ```env
     PORT=3000
-    MONGO_URI=mongodb+srv://abhishekkanichery:abhishek123@todo.5y03w.mongodb.net/?retryWrites=true&w=majority&appName=todo
+    MONGO_URI=your_mongoDB_uri
     SALT_ROUND=10
     JWT_SECRET=secret@123
     GITHUB_API_URL=https://api.github.com/gists

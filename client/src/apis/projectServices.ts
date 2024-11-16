@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = 'http://localhost:3000'; // Your backend API URL
+const API_URL = 'https://todo-app-o03m.onrender.com'
 
 const getToken = async () => {
     return localStorage.getItem('accessToken');
@@ -25,10 +25,6 @@ export const createNewProject = async (projectData: any) => {
 
 export const updateTodoStatus = async (projectId: string, todoId: string, status: boolean) => {
     return await axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, status}, await authHeaders());
-}
-
-export const updateTodoDescription = async (projectId: string, todoId: string, description: string) => {
-    return await axios.patch(`${API_URL}/api/project/${projectId}/todo`, {todoId, description}, await authHeaders());
 }
 
 export const deleteProjectById = async (projectId: string) => {
