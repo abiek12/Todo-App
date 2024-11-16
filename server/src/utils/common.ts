@@ -2,7 +2,8 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 
-const SALT_ROUND = process.env.SALT_ROUND || 10;
+const SALT_ROUND = 10;
+const salt = bcrypt.genSaltSync(SALT_ROUND);
 
 export class httpStatus {
     INTERNAL_ERROR = 500;
@@ -23,7 +24,7 @@ export class commonMessages {
 }
 
 export const hashPassword = async (password: string): Promise<string> => {
-    return bcrypt.hash(password, SALT_ROUND);
+    return bcrypt.hash(password, salt);
 }
 
 export const comparePassword = async (plainPassword: string, hashedPassword: string): Promise<boolean> => {
