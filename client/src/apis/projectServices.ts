@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = 'http://localhost:3000'; // Your backend API URL
+const API_URL = 'https://todo-app-o03m.onrender.com'
 
 const getToken = async () => {
     return localStorage.getItem('accessToken');
@@ -19,7 +19,13 @@ export const fetchProjectById = async (projectId: string) => {
     return await axios.get(`${API_URL}/api/project/${projectId}`, await authHeaders());
 }
 
-export const createNewProject = async (projectData: any) => {
+interface ProjectData {
+    title: string;
+    description: string;
+    // Add other fields as necessary
+}
+
+export const createNewProject = async (projectData: ProjectData) => {
     return await axios.post(`${API_URL}/api/project/create`, projectData, await authHeaders());    
 }
 
@@ -31,7 +37,7 @@ export const deleteProjectById = async (projectId: string) => {
     return await axios.delete(`${API_URL}/api/project/${projectId}`, await authHeaders());
 }
 
-export const updateProjectTitle = async (projectId: string, title: any) => {    
+export const updateProjectTitle = async (projectId: string, title: string) => {    
      return await axios.put(`${API_URL}/api/project/${projectId}`, {title}, await authHeaders());    
 }
 
@@ -39,7 +45,7 @@ export const deleteTodoItem = async (projectId: string, todoId: string) => {
     return await axios.delete(`${API_URL}/api/project/${projectId}/todo?todoId=${todoId}`, await authHeaders());
 }
 
-export const addNewTodo = async (projectId: string, description: any) => {
+export const addNewTodo = async (projectId: string, description: string) => {
     return await axios.post(`${API_URL}/api/project/${projectId}/todo`, {description}, await authHeaders());
 }
 
