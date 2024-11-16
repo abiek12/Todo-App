@@ -11,7 +11,7 @@ const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-    origin: 'http://localhost:8080',
+    origin: 'https://simple-todo-app-8azn.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Specify allowed methods if needed
     allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
 };
