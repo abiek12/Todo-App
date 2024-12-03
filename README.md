@@ -1,4 +1,4 @@
-# Todo Application
+#  Simple Todo Application
 
 This application allows users to manage projects and their associated todos. It provides the following functionalities:
 1. **Create a new project**
